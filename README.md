@@ -44,6 +44,8 @@ operator> should return true on 5>14, 2>1, 4>14
 **All iterators should work in O(1) in both memory and time complexity.**
 Iterators should **NOT** be detached from the main container. If one add's an element to a container after an iterator is created the iterator should know the element return it should its turn will come. 
 
+Note: As defined in the course regulations, I state that I used the help of a private teacher in order to solve the assignment.
+
 
 **חלק ב**: יש לכתוב: 
 
