@@ -11,7 +11,8 @@ namespace ariel{
 
     // Default constructor
     MagicalContainer::MagicalContainer():
-    data(list<int>()){}
+    data(list<int>()),
+    primeNumbers(vector<int>()){}
 
     // Add an element to the container
     void MagicalContainer::addElement(int element) {
@@ -219,51 +220,41 @@ namespace ariel{
     int MagicalContainer::SideCrossIterator::operator*() const {
 
         if(flag){
-            auto num = sideCrossIteratorContainer.data.begin();
-            advance(num, startIndex);
-            return *num;
+            auto it = sideCrossIteratorContainer.data.begin(); // Get an iterator pointing to the beginning of the container
+            advance(it, startIndex); // Move the iterator to the startIndex position
+            return *it; // Dereference and return the value at the iterator position
         }
         else{
-            if(endIndex != sideCrossIteratorContainer.size()){
-                auto num = sideCrossIteratorContainer.data.begin();
-                advance(num, endIndex);
-                return *num;
-            }
-            else{
-                auto num = sideCrossIteratorContainer.data.begin();
-                advance(num, endIndex - 1);
-                return *num;
-            }
+            auto it = sideCrossIteratorContainer.data.begin(); // Get an iterator pointing to the beginning of the container
+            size_t index = (endIndex != sideCrossIteratorContainer.size()) ? endIndex : endIndex - 1;
+            // If endIndex is not the last index, set index to endIndex - otherwise, set it to endIndex - 1
+            advance(it, index); // Move the iterator to the determined index position
+            return *it; // Dereference and return the value at the iterator position
         }
-        return -1;
     }
     
     // Pre-increment operator
     MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++(){
 
-        if(*this == this->end())throw std::runtime_error("Error: Out of bounds");
+        if (*this == this->end()) throw std::runtime_error("Error: Out of bounds"); // If iterator is already at the end throw an exception
 
         if(!flag){
-            if(startIndex + 1 < endIndex){
-                ++startIndex;
-                flag = !flag;
+            if (startIndex + 1 < endIndex) { // If there is more than one element between startIndex and endIndex
+                ++startIndex; // Increment startIndex
+                flag = !flag; // Toggle the flag value
             }
-            else if(startIndex + 1 == endIndex){
-                ++startIndex;
-            }
-            else flag = false;
+            else if(startIndex + 1 == endIndex) ++startIndex; // If there is only one element between startIndex and endIndex -  increment startIndex
+            else flag = false; // Set flag to false
         }
-        else {
-            if(startIndex < endIndex - 1){
-                --endIndex;
-                flag = !flag;
+        else { // If flag is true
+            if(startIndex < endIndex - 1){ // If there is more than one element between startIndex and endIndex
+                --endIndex; // Decrement endIndex
+                flag = !flag; // Toggle the flag value
             }
-            else if(startIndex == endIndex - 1){
-                --endIndex;
-            }
-            else flag = true;
+            else if(startIndex == endIndex - 1) --endIndex; // If there is only one element between startIndex and endIndex - decrement endIndex
+            else flag = true; // Set flag to true
         }
-        return *this;
+        return *this; // Return the updated iterator
     }
 
     // Begin iterator
@@ -277,12 +268,14 @@ namespace ariel{
     // End iterator
     MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end(){
 
-        size_t middleIndex = sideCrossIteratorContainer.size() / 2;
+        size_t middleIndex = sideCrossIteratorContainer.size() / 2; // Calculate the middle index of the container
 
-        size_t endIndex = middleIndex;
+        size_t endIndex = middleIndex; // Set the endIndex to the middleIndex
 
         return SideCrossIterator(sideCrossIteratorContainer, middleIndex, endIndex, true);
+        // Create and return a SideCrossIterator object with the container, middleIndex, endIndex, and the flag set to true
     }
+
 
     // Default constructor
     MagicalContainer::PrimeIterator::PrimeIterator(): 
@@ -343,13 +336,18 @@ namespace ariel{
     int MagicalContainer::PrimeIterator::operator*() const {
 
         size_t current = static_cast<size_t>(primeIteratorContainer.primeNumbers[index]);
+        // Get the current prime number's index and cast it to size_t type
 
         auto num = primeIteratorContainer.data.begin();
+        // Get an iterator pointing to the beginning of the container
 
-        std::advance(num, current);
+        advance(num, current);
+        // Move the iterator to the position indicated by the current prime number index
 
         return *num;
+        // Dereference and return the value at the iterator position
     }
+
 
     // Pre-increment operator
     MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator++(){
@@ -373,5 +371,6 @@ namespace ariel{
     MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() {
 
         return PrimeIterator(primeIteratorContainer, primeIteratorContainer.primeNumbers.size());
+        // Create and return a primeIteratorContainer object with the container and primeNumbers size
     }
 }
