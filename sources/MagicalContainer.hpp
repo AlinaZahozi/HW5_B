@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include <vector>
+#include <cmath> 
+#include <algorithm> 
+
 using namespace std;
 
 namespace ariel {
@@ -12,7 +14,6 @@ namespace ariel {
         private:
 
             list<int> data; // List to store elements
-            vector<int> primeNumbers; // Vector to store prime numbers
 
         public:
 
@@ -26,10 +27,7 @@ namespace ariel {
             void removeElement(int element);
 
             // Get the size of the container
-            size_t size() const;
-
-            // Check if a number is prime
-            bool isPrime(int number) const;
+            int size() const;
 
             // Iterator class for iterating in ascending order
             class AscendingIterator;
@@ -46,7 +44,7 @@ namespace ariel {
         private:
 
             MagicalContainer &ascendingIteratorConteiner; // Reference to the container being iterated
-            size_t index; // Current index of the iterator
+            list<int>::const_iterator iterator;
 
         public:
 
@@ -55,9 +53,6 @@ namespace ariel {
 
             // Constructor with container reference
             AscendingIterator(MagicalContainer &container);
-
-            // Constructor with container reference and starting index
-            AscendingIterator(MagicalContainer &container, size_t index);
 
             // Copy constructor
             AscendingIterator(const AscendingIterator &other);
@@ -98,10 +93,9 @@ namespace ariel {
         private:
 
             MagicalContainer &sideCrossIteratorContainer; // Reference to the container being iterated
-            size_t currentIndex; // Current index of the iterator
-            size_t startIndex; // Starting index of the iteration
-            size_t endIndex; // Ending index of the iteration
-            bool flag; // Flag to determine the direction of iteration
+            list<int>::iterator _left;
+            list<int>::iterator _right;
+            bool forward; 
 
         public:
 
@@ -111,8 +105,8 @@ namespace ariel {
             // Constructor with container reference
             SideCrossIterator(MagicalContainer &container);
 
-            // Constructor with container reference, start index, end index, and flag
-            SideCrossIterator(MagicalContainer &container, size_t startIndex, size_t endIndex, bool flag);
+            // Constructor with parameters
+            SideCrossIterator(MagicalContainer &container, list<int>::iterator letf_it, std::list<int>::iterator right_it, bool forward);
 
             // Copy constructor
             SideCrossIterator(const SideCrossIterator &other);
@@ -153,7 +147,9 @@ namespace ariel {
         private:
 
             const MagicalContainer &primeIteratorContainer; // Reference to the container being iterated
-            size_t index; // Current index of the iterator
+            list<int>::const_iterator iterator;
+
+            bool isPrime(int number);
 
         public:
         
@@ -162,9 +158,6 @@ namespace ariel {
 
             // Constructor with container reference
             PrimeIterator(const MagicalContainer &container);
-
-            // Constructor with container reference and starting index
-            PrimeIterator(const MagicalContainer &container, size_t index);
 
             // Copy constructor
             PrimeIterator(const PrimeIterator &other);
