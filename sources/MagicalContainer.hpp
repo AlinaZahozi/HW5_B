@@ -149,6 +149,7 @@ namespace ariel {
             const MagicalContainer &primeIteratorContainer; // Reference to the container being iterated
             list<int>::const_iterator iterator;
 
+            // Check if number is prime
             bool isPrime(int number);
 
         public:
