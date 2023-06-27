@@ -319,7 +319,7 @@ namespace ariel{
             else if (*this_iterator < *other_iterator) return false;
 
         }
-        return (this_iterator == primeIteratorContainer.data.end() && other_iterator != other.primeIteratorContainer.data.end()); // Check if either iterator has reached the end
+        return (this_iterator == primeIteratorContainer.data.end() && other_iterator != other.primeIteratorContainer.data.end());
     }
 
     // Less than comparison operator
