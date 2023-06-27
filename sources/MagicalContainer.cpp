@@ -72,7 +72,7 @@ namespace ariel{
     // Copy assignment operator
     MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(const AscendingIterator& other){
 
-        if (this != &other) throw std::runtime_error("Error: Different container"); // Check for self-assignment
+        if (&ascendingIteratorConteiner != &other.ascendingIteratorConteiner) throw std::runtime_error("Error: Different container");
 
         iterator = other.iterator; // Copy the iterator
         return *this; // Return the updated iterator
